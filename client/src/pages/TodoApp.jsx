@@ -125,61 +125,86 @@ export default function TodoApp() {
                   <div className="bg-background border border-border rounded-lg shadow-sm p-4">
                     <h3 className="text-lg font-semibold text-foreground mb-4">
                       <BarChart3 className="inline w-5 h-5 mr-2 text-primary" />
-                      Advanced Stats
+                      Your Score
                     </h3>
                     
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Todos</span>
-                          <div className="space-x-4">
-                            <span className="font-semibold">Total</span>
-                            <span className="font-semibold">Completed</span>
-                            <span className="font-semibold">Remaining</span>
+                    <div className="space-y-6">
+                      {/* Score Display */}
+                      <div className="text-center p-4 bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg border">
+                        <div className="text-3xl font-bold text-primary mb-2">
+                          {stats.completedPriority || 0}
+                        </div>
+                        <div className="text-sm font-semibold text-muted-foreground">
+                          Priority Points Earned
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {stats.remainingPriority || 0} points remaining
+                        </div>
+                      </div>
+
+                      {/* Progress Breakdown */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm font-semibold">
+                            <span>Tasks</span>
+                            <span>{stats.completed}/{stats.total}</span>
+                          </div>
+                          <div className="w-full bg-muted rounded-full h-2">
+                            <div 
+                              className="bg-primary h-2 rounded-full transition-all duration-300" 
+                              style={{ width: `${stats.total > 0 ? (stats.completed / stats.total) * 100 : 0}%` }}
+                            ></div>
                           </div>
                         </div>
-                        <div className="flex justify-between text-sm">
-                          <span></span>
-                          <div className="space-x-8">
-                            <span>{stats.total}</span>
-                            <span className="ml-6">{stats.completed}</span>
-                            <span className="ml-6">{stats.remaining}</span>
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm font-semibold">
+                            <span>Priority Score</span>
+                            <span>{stats.completedPriority || 0}/{stats.totalPriority || 0}</span>
+                          </div>
+                          <div className="w-full bg-muted rounded-full h-2">
+                            <div 
+                              className="bg-gradient-to-r from-green-500 to-blue-500 h-2 rounded-full transition-all duration-300" 
+                              style={{ width: `${stats.totalPriority > 0 ? (stats.completedPriority / stats.totalPriority) * 100 : 0}%` }}
+                            ></div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm font-semibold">
+                            <span>Time Efficiency</span>
+                            <span>{Math.floor((stats.actualTime || 0) / 60)}h {(stats.actualTime || 0) % 60}m</span>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {stats.estimatedTime ? `Estimated: ${Math.floor(stats.estimatedTime / 60)}h ${stats.estimatedTime % 60}m` : 'No estimates'}
                           </div>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Priority</span>
-                          <div className="space-x-4">
-                            <span>{stats.totalPriority || 0}</span>
-                            <span className="ml-6">{stats.completedPriority || 0}</span>
-                            <span className="ml-6">{stats.remainingPriority || 0}</span>
+                      {/* Achievement Badges */}
+                      {stats.completedPriority >= 50 && (
+                        <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                          <div className="flex items-center space-x-2">
+                            <span className="text-yellow-600 dark:text-yellow-400 text-lg">🏆</span>
+                            <span className="text-sm font-semibold text-yellow-800 dark:text-yellow-200">High Achiever!</span>
                           </div>
+                          <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
+                            50+ priority points earned
+                          </p>
                         </div>
-                      </div>
+                      )}
 
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Estimated</span>
-                          <div className="space-x-4">
-                            <span>{Math.floor((stats.estimatedTime + stats.actualTime) / 60) || 0}h</span>
-                            <span className="ml-2">0m</span>
-                            <span className="ml-4">{Math.floor(stats.estimatedTime / 60) || 0}h</span>
+                      {stats.completed >= 10 && (
+                        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                          <div className="flex items-center space-x-2">
+                            <span className="text-green-600 dark:text-green-400 text-lg">💪</span>
+                            <span className="text-sm font-semibold text-green-800 dark:text-green-200">Task Master!</span>
                           </div>
+                          <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                            10+ tasks completed
+                          </p>
                         </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Actual</span>
-                          <div className="space-x-4">
-                            <span>{Math.floor(stats.actualTime / 60) || 0}h</span>
-                            <span className="ml-8">0m</span>
-                            <span className="ml-8">0m</span>
-                          </div>
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 )}

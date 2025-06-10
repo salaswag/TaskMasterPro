@@ -76,14 +76,17 @@ export function DashboardView() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-200 dark:border-yellow-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Priority Score</CardTitle>
-            <Star className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-yellow-800 dark:text-yellow-200">Your Score</CardTitle>
+            <Star className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.completedPriority || 0}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-3xl font-bold text-yellow-700 dark:text-yellow-300">{stats.completedPriority || 0}</div>
+            <p className="text-xs text-yellow-600 dark:text-yellow-400 font-semibold">
+              Priority Points Earned
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
               {stats.remainingPriority || 0} points remaining
             </p>
           </CardContent>
