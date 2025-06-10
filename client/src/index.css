@@ -148,7 +148,7 @@
 }
 
 .drop-zone {
-  @apply border-2 border-dashed border-primary/50 bg-primary/5;
+  @apply border-2 border-dashed border-primary border-opacity-50 bg-primary bg-opacity-5;
 }
 
 /* Custom button variants for theme switching */
