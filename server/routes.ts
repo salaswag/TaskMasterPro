@@ -133,7 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get task statistics
-  app.get("/api/tasks/stats", async (req, res) => {
+  app.get("/api/stats", async (req, res) => {
     try {
       const tasks = await storage.getTasks();
       const today = new Date().toDateString();
